@@ -28,7 +28,75 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-//Write your code here
+ComplexNumber operator+(double d, const ComplexNumber &c){
+    return ComplexNumber(d + c.real, c.imag);
+}
+
+ComplexNumber operator-(double d, const ComplexNumber &c){
+    return ComplexNumber(d - c.real, -c.imag);
+}
+
+ComplexNumber operator*(double d, const ComplexNumber &c){
+    return ComplexNumber(c.real*d, c.imag*d);
+}
+
+ComplexNumber operator/(double d, const ComplexNumber &c){
+    double denom = c.real*c.real + c.imag*c.imag;
+    return ComplexNumber(
+        (d*c.real)/denom,
+        (-d*c.imag)/denom
+    );
+}
+
+bool operator==(double d, const ComplexNumber &c){
+    return (c.real == d && c.imag == 0);
+}
+
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+    return ComplexNumber(
+        real*c.real - imag*c.imag,
+        real*c.imag + imag*c.real
+    );
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+    double denom = c.real*c.real + c.imag*c.imag;
+    return ComplexNumber(
+        (real*c.real + imag*c.imag)/denom,
+        (imag*c.real - real*c.imag)/denom
+    );
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+    return (real == c.real && imag == c.imag);
+}
+
+double ComplexNumber::abs(){
+    return sqrt(real*real + imag*imag);
+}
+
+double ComplexNumber::angle(){
+    return atan2(imag, real) * 180 / 3.141592653589793;
+}
+
+ostream& operator<<(ostream &out, const ComplexNumber &c){
+
+    if(c.real == 0 && c.imag == 0){
+        out << 0;
+    }
+    else if(c.imag == 0){
+        out << c.real;
+    }
+    else if(c.real == 0){
+        out << c.imag << "i";
+    }
+    else{
+        out << c.real;
+        if(c.imag > 0) out << "+" << c.imag << "i";
+        else out << c.imag << "i";
+    }
+    return out;
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
@@ -70,8 +138,4 @@ int main(){
 	cout << (ComplexNumber(1,1) == 1) << "\n";
 	cout << (0 == ComplexNumber()) << "\n";
 }
-
-
-
-
 
